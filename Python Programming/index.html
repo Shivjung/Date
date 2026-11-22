@@ -1,0 +1,373 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>A Little Date Invitation 💗</title>
+
+<style>
+* {
+    box-sizing: border-box;
+}
+
+body {
+    margin: 0;
+    min-height: 100vh;
+    font-family: "Comic Sans MS", cursive, sans-serif;
+    background: linear-gradient(135deg, #ffe6ef, #fff2f7, #e8f4ff);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    overflow-x: hidden;
+    padding: 20px;
+}
+
+.cloud {
+    position: fixed;
+    font-size: 45px;
+    opacity: 0.7;
+    animation: float 5s ease-in-out infinite;
+    pointer-events: none;
+}
+
+.cloud:nth-child(1) {
+    top: 8%;
+    left: 8%;
+}
+
+.cloud:nth-child(2) {
+    top: 15%;
+    right: 10%;
+    animation-delay: 1s;
+}
+
+.cloud:nth-child(3) {
+    bottom: 8%;
+    left: 15%;
+    animation-delay: 2s;
+}
+
+@keyframes float {
+    0%, 100% { transform: translateY(0); }
+    50% { transform: translateY(-15px); }
+}
+
+.card {
+    background: rgba(255,255,255,0.92);
+    width: 100%;
+    max-width: 440px;
+    padding: 35px 25px;
+    border-radius: 30px;
+    text-align: center;
+    box-shadow: 0 10px 35px rgba(230, 130, 165, 0.2);
+    position: relative;
+    z-index: 2;
+}
+
+h1 {
+    color: #e779a2;
+    font-size: 27px;
+    margin-bottom: 12px;
+}
+
+p {
+    color: #886b79;
+    font-size: 16px;
+    line-height: 1.6;
+}
+
+.teddy {
+    font-size: 75px;
+    margin: 10px 0;
+}
+
+.buttons {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 18px;
+    margin-top: 25px;
+    min-height: 55px;
+    position: relative;
+}
+
+button {
+    border: none;
+    padding: 13px 25px;
+    border-radius: 30px;
+    font-size: 16px;
+    font-family: inherit;
+    cursor: pointer;
+    transition: background 0.2s;
+}
+
+.yes-btn {
+    background: #f48fb1;
+    color: white;
+}
+
+.yes-btn:hover {
+    background: #e779a2;
+}
+
+.no-btn {
+    background: #e8e8e8;
+    color: #777;
+    position: relative;
+}
+
+#funnyMessage {
+    color: #df78a0;
+    font-size: 14px;
+    min-height: 25px;
+    margin-top: 18px;
+}
+
+.hidden {
+    display: none;
+}
+
+select {
+    width: 100%;
+    padding: 13px;
+    margin: 10px 0;
+    border: 2px solid #f5c3d5;
+    border-radius: 15px;
+    font-family: inherit;
+    font-size: 15px;
+    background: #fff9fc;
+    color: #886b79;
+}
+
+.confirm-btn {
+    background: #f48fb1;
+    color: white;
+    width: 100%;
+    margin-top: 15px;
+}
+
+.back-btn {
+    background: #f3e4eb;
+    color: #a16f85;
+    margin-top: 12px;
+}
+
+label {
+    display: block;
+    text-align: left;
+    color: #bd7894;
+    margin-top: 15px;
+    font-size: 14px;
+}
+</style>
+</head>
+
+<body>
+
+<div class="cloud">☁️</div>
+<div class="cloud">☁️</div>
+<div class="cloud">☁️</div>
+
+<div class="card">
+
+    <div id="questionPage">
+        <div class="teddy">🧸</div>
+
+        <h1>Will you go on a date with me? 💗</h1>
+
+        <p>
+            I have a little question for you...<br>
+            Would you make a sweet memory with me? 🌷
+        </p>
+
+        <div class="buttons">
+            <button class="yes-btn" onclick="showDatePage()">
+                Yes! 💕
+            </button>
+
+            <button class="no-btn" id="noButton" onclick="handleNo()">
+                No 🙈
+            </button>
+        </div>
+
+        <div id="funnyMessage"></div>
+    </div>
+
+    <div id="datePage" class="hidden">
+
+        <div class="teddy">🥰</div>
+
+        <h1>Yay! It's a date! 💗</h1>
+
+        <p>
+            Now let's choose our special day!
+        </p>
+
+        <label for="dateSelect">Choose a Friday or Saturday 📅</label>
+        <select id="dateSelect">
+            <option value="">Select a date</option>
+        </select>
+
+        <label for="activitySelect">What should we do? 🌸</label>
+        <select id="activitySelect">
+            <option value="">Choose an activity</option>
+            <option value="MoMo 🥟">MoMo 🥟</option>
+            <option value="Pizza 🍕">Pizza 🍕</option>
+            <option value="A lovely walk 🌷">A lovely walk 🌷</option>
+            <option value="Movie night 🎬">Movie night 🎬</option>
+        </select>
+
+        <button class="confirm-btn" onclick="sendDate()">
+            Confirm our date 💌
+        </button>
+
+        <br>
+
+        <button class="back-btn" onclick="goBack()">
+            Go back
+        </button>
+
+    </div>
+
+</div>
+
+<script>
+const whatsappNumber = "491719217300";
+
+let noClicks = 0;
+
+const noMessages = [
+    "Are you sure? 🥺",
+    "Pretty please? 🧸",
+    "The teddy bear is getting sad! 😭",
+    "One more chance? 💗"
+];
+
+function showDatePage() {
+    document.getElementById("questionPage").classList.add("hidden");
+    document.getElementById("datePage").classList.remove("hidden");
+    createDateOptions();
+}
+
+function goBack() {
+    document.getElementById("datePage").classList.add("hidden");
+    document.getElementById("questionPage").classList.remove("hidden");
+}
+
+function handleNo() {
+    noClicks++;
+
+    const noButton = document.getElementById("noButton");
+    const funnyMessage = document.getElementById("funnyMessage");
+
+    if (noClicks < 5) {
+        funnyMessage.textContent = noMessages[noClicks - 1];
+
+        const maxX = Math.max(0, window.innerWidth - noButton.offsetWidth - 30);
+        const maxY = Math.max(0, window.innerHeight - noButton.offsetHeight - 30);
+
+        noButton.style.position = "fixed";
+        noButton.style.left = Math.random() * maxX + "px";
+        noButton.style.top = Math.random() * maxY + "px";
+        noButton.style.zIndex = "10";
+
+    } else {
+        noButton.textContent = "Okay okay... 🥹";
+        noButton.style.position = "relative";
+        noButton.style.left = "auto";
+        noButton.style.top = "auto";
+        noButton.style.zIndex = "1";
+        noButton.style.background = "#f48fb1";
+        noButton.style.color = "white";
+        noButton.onclick = null;
+
+        funnyMessage.textContent = "Sending a little message... 💌";
+
+        const message =
+            "I clicked NO 5 times, but this cute teddy bear still won't give up! 🧸💕 Okay, maybe I secretly want to say YES! 🌷";
+
+        const whatsappURL =
+            "https://wa.me/" + whatsappNumber +
+            "?text=" + encodeURIComponent(message);
+
+        window.open(whatsappURL, "_blank");
+    }
+}
+
+function createDateOptions() {
+    const dateSelect = document.getElementById("dateSelect");
+
+    if (dateSelect.options.length > 1) return;
+
+    const today = new Date();
+    today.setHours(0, 0, 0, 0);
+
+    const endDate = new Date(2026, 11, 19);
+    const current = new Date(today);
+
+    // Start from Monday of the current week
+    const day = current.getDay();
+    const difference = day === 0 ? -6 : 1 - day;
+    current.setDate(current.getDate() + difference);
+
+    while (current <= endDate) {
+        const weekday = current.getDay();
+
+        if ((weekday === 5 || weekday === 6) && current >= today) {
+            const option = document.createElement("option");
+
+            const value = current.getFullYear() + "-" +
+                String(current.getMonth() + 1).padStart(2, "0") + "-" +
+                String(current.getDate()).padStart(2, "0");
+
+            const formatted = current.toLocaleDateString("en-GB", {
+                weekday: "long",
+                day: "numeric",
+                month: "long",
+                year: "numeric"
+            });
+
+            option.value = value;
+            option.textContent = formatted;
+            dateSelect.appendChild(option);
+        }
+
+        current.setDate(current.getDate() + 1);
+    }
+}
+
+function sendDate() {
+    const selectedDate = document.getElementById("dateSelect").value;
+    const selectedActivity = document.getElementById("activitySelect").value;
+
+    if (!selectedDate || !selectedActivity) {
+        alert("Please choose a date and an activity first! 💗");
+        return;
+    }
+
+    const date = new Date(selectedDate + "T12:00:00");
+
+    const formattedDate = date.toLocaleDateString("en-GB", {
+        weekday: "long",
+        day: "numeric",
+        month: "long",
+        year: "numeric"
+    });
+
+    const message =
+        "Yay! 💗 Our date is confirmed! 🧸\n\n" +
+        "📅 Date: " + formattedDate + "\n" +
+        "🌸 Activity: " + selectedActivity + "\n\n" +
+        "Can't wait to spend time together! 💕";
+
+    const whatsappURL =
+        "https://wa.me/" + whatsappNumber +
+        "?text=" + encodeURIComponent(message);
+
+    window.open(whatsappURL, "_blank");
+}
+</script>
+
+</body>
+</html>
